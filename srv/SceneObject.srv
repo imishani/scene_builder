@@ -1,0 +1,17 @@
+string object_name
+int32 shape_type
+float64 position_x
+float64 position_y
+float64 position_z
+float64 orientation_x
+float64 orientation_y
+float64 orientation_z
+float64 orientation_w
+float64 dimension_x
+float64 dimension_y
+float64 dimension_z
+float64 radius
+string mesh_resource
+moveit_msgs/ObjectColor colors
+---
+bool success
