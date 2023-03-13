@@ -40,7 +40,12 @@ namespace scene{
     /// \brief A class that builds a scene from a given set of objects
     class scene_builder {
         public:
+            scene_builder(std::string frame_id="world");
+
             scene_builder(ros::NodeHandle& nh, ros::NodeHandle& pnh);
+
+            scene_builder(ros::NodeHandle& nh, ros::NodeHandle& pnh, std::string& frame_id);
+
             ~scene_builder();
 
             /// \brief Create a box object
@@ -126,7 +131,29 @@ namespace scene{
             size_t get_object_counter() const;
 
 
+            /// \brief Get an object in the scene
+            /// \param name The name of the object
+            /// \param obj reference where to store the object
+            /// \return True if the object was found, false otherwise
+            bool get_object(std::string& name, object& obj);
+
+
+            /// \brief Get the objects in the scene
+            /// \return std::vector<object> The objects in the scene
+            std::vector<object> get_objects() const;
+
+            /// \brief Get the frame id of the scene
+            std::string get_frame_id() const{
+                return frame_id_;
+            }
+
+            void set_frame_id(std::string frame_id){
+                frame_id_ = frame_id;
+            }
+
+
         protected:
+
             ros::NodeHandle nh_;
             ros::NodeHandle pnh_;
 

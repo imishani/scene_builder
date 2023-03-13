@@ -4,11 +4,20 @@
 
 #include "scene_builder.hpp"
 
+
+scene::scene_builder::scene_builder(std::string frame_id) : frame_id_(frame_id) {
+    object_counter = 0;
+}
+
 scene::scene_builder::scene_builder(ros::NodeHandle& nh, ros::NodeHandle& pnh) : nh_(nh), pnh_(pnh){
     object_counter = 0;
-    /// TODO: Change the way the frame_id is set.
     pnh_.param<std::string>("frame_id", frame_id_, "world");
 }
+
+scene::scene_builder::scene_builder(ros::NodeHandle& nh, ros::NodeHandle& pnh, std::string& frame_id) : nh_(nh), pnh_(pnh), frame_id_(frame_id){
+    object_counter = 0;
+}
+
 
 scene::scene_builder::~scene_builder() {
 //    for (auto& object : objects_){
@@ -113,6 +122,8 @@ bool scene::scene_builder::remove_object(std::string &name) {
     for (auto &object: objects_)
         if (object.name == name) {
             planning_scene_interface_.removeCollisionObjects({name});
+            // Sleep and let it go
+            ros::Duration(0.5).sleep();
             // Remove the object from the vector
             objects_.erase(std::remove(objects_.begin(), objects_.end(), object), objects_.end());
             object_counter--;
@@ -125,6 +136,9 @@ bool scene::scene_builder::remove_object(std::string &name) {
 bool scene::scene_builder::remove_all_objects() {
     // Iterating through the object names:
     std::vector<std::string> object_names;
+    for (auto &object: objects_) {
+        object_names.push_back(object.name);
+    }
     // Removing the objects
     for (auto &object_name: object_names) {
         if (!remove_object(object_name)) {
@@ -265,6 +279,22 @@ size_t scene::scene_builder::get_object_counter() const {
     return object_counter;
 }
 
+bool scene::scene_builder::get_object(std::string &name, object& obj) {
+    for (auto& object : objects_){
+        if (object.name == name){
+            obj = object;
+            return true;
+        }
+    }
+    ROS_ERROR("Object %s does not exist", name.c_str());
+    return false;
+}
+
+std::vector<scene::object> scene::scene_builder::get_objects() const {
+    return objects_;
+}
+
+
 
 int main(int argc, char** argv){
 
@@ -278,6 +308,7 @@ int main(int argc, char** argv){
     ros::ServiceServer service = nh.advertiseService("scene_builder/add_object", &scene::scene_builder::add_object_cb, &scene_builder);
     ros::ServiceServer service2 = nh.advertiseService("scene_builder/remove_object", &scene::scene_builder::remove_object_cb, &scene_builder);
     ros::ServiceServer service3 = nh.advertiseService("scene_builder/remove_all_objects", &scene::scene_builder::remove_all_objects_cb, &scene_builder);
+    /// @TODO: add a service to get the list of objects in the scene
 
     ROS_INFO("Scene builder is ready to add/remove objects");
 
