@@ -224,7 +224,7 @@ bool scene::scene_builder::add_object_cb(::scene_builder::SceneObject::Request &
 
         case 2: {
             // Create a cylinder
-            std::vector<double> dimensions {req.radius, req.dimension_z};
+            std::vector<double> dimensions {req.dimension_z, req.radius};
             if (!create_cylinder(req.object_name, pose, dimensions, req.colors)) {
                 return false;
             }

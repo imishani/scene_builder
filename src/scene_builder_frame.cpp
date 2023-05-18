@@ -50,8 +50,8 @@ int main(int argc, char** argv)
     // Add a mesh - right side panel:
     srv.request.shape_type = 4;
     srv.request.object_name = "right_side_panel";
-    srv.request.position_x = 1.2;
-    srv.request.position_y = 0.0;
+    srv.request.position_x = 1.9; //1.2;
+    srv.request.position_y = -1.; //0.0;
     srv.request.position_z = 0.67;
 
     tf2::Quaternion q;
@@ -82,8 +82,9 @@ int main(int argc, char** argv)
 
     // Add a mesh - left side panel:
     srv.request.object_name = "left_side_panel";
-    srv.request.position_x = 1.9;
-    srv.request.position_y = -1.;
+//    srv.request.position_x = 1.9;
+//    srv.request.position_y = -1.;
+    srv.request.position_z = 0.70;
 
     srv.request.colors.id = srv.request.object_name;
 
@@ -202,6 +203,96 @@ int main(int argc, char** argv)
         ROS_ERROR("Failed to call service");
         return 1;
     }
+
+    srv.request.shape_type = 1;
+    srv.request.object_name = "rectangle_1";
+    srv.request.position_x = 0.5;
+    srv.request.position_y = 1.0;
+    srv.request.position_z = 1.72;
+    srv.request.orientation_w = 1.0;
+    srv.request.orientation_x = 0.0;
+    srv.request.orientation_y = 0.0;
+    srv.request.orientation_z = 0.0;
+    srv.request.dimension_x = 0.02;
+    srv.request.dimension_y = 1.0;
+    srv.request.dimension_z = 2.0;
+
+    srv.request.colors.id = srv.request.object_name;
+    srv.request.colors.color.r = 1.0;
+    srv.request.colors.color.g = 0.0;
+    srv.request.colors.color.b = 0.0;
+    srv.request.colors.color.a = 0.2;
+
+
+    if (client.call(srv))
+    {
+        ROS_INFO("Success: %d", srv.response.success);
+    }
+    else
+    {
+        ROS_ERROR("Failed to call service");
+        return 1;
+    }
+
+    srv.request.shape_type = 1;
+    srv.request.object_name = "rectangle_2";
+    srv.request.position_x = 0.5;
+    srv.request.position_y = -1.0;
+    srv.request.position_z = 1.72;
+    srv.request.orientation_w = 1.0;
+    srv.request.orientation_x = 0.0;
+    srv.request.orientation_y = 0.0;
+    srv.request.orientation_z = 0.0;
+    srv.request.dimension_x = 0.02;
+    srv.request.dimension_y = 1.0;
+    srv.request.dimension_z = 2.0;
+
+    srv.request.colors.id = srv.request.object_name;
+    srv.request.colors.color.r = 1.0;
+    srv.request.colors.color.g = 0.0;
+    srv.request.colors.color.b = 0.0;
+    srv.request.colors.color.a = 0.2;
+
+
+    if (client.call(srv))
+    {
+        ROS_INFO("Success: %d", srv.response.success);
+    }
+    else
+    {
+        ROS_ERROR("Failed to call service");
+        return 1;
+    }
+
+    // Adding "demmy" objects to the scene as screws, TODO: Change to real screws
+    // Add as cylinder
+    for (int i = 0; i < 6; i++) {
+        srv.request.shape_type = 2;
+        srv.request.object_name = "screw_" + std::to_string(i);
+        srv.request.position_x = 1.7 + 0.05 * i;
+        srv.request.position_y = 1.0;
+        srv.request.position_z = 0.68;
+        srv.request.orientation_w = 1.0;
+        srv.request.orientation_x = 0.0;
+        srv.request.orientation_y = 0.0;
+        srv.request.orientation_z = 0.0;
+        srv.request.dimension_z = 0.05;
+        srv.request.radius = 0.01;
+
+        srv.request.colors.id = srv.request.object_name;
+        srv.request.colors.color.r = 0.5;
+        srv.request.colors.color.g = 0.0;
+        srv.request.colors.color.b = 0.5;
+        srv.request.colors.color.a = 0.8;
+
+        if (client.call(srv)) {
+            ROS_INFO("Success: %d", srv.response.success);
+        } else {
+            ROS_ERROR("Failed to call service");
+            return 1;
+        }
+    }
+
 
 
     return 0;

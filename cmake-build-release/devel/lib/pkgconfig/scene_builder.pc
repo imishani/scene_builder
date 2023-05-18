@@ -1,0 +1,8 @@
+prefix=/home/itamar/work/code/algorithms/manipulation_ws/src/scene_builder/cmake-build-release/devel
+
+Name: scene_builder
+Description: Description of scene_builder
+Version: 0.0.0
+Cflags: -I/home/itamar/work/code/algorithms/manipulation_ws/src/scene_builder/cmake-build-release/devel/include -I/home/itamar/work/code/algorithms/manipulation_ws/src/scene_builder/include
+Libs: -L${prefix}/lib -lscene_builder
+Requires: 
