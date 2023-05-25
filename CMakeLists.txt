@@ -18,11 +18,13 @@ find_package(catkin REQUIRED COMPONENTS
         geometry_msgs
         trajectory_msgs
         moveit_msgs
-        message_generation)
+        message_generation
+        )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 find_package(Eigen3 REQUIRED)
+#find_package(Boost REQUIRED COMPONENTS filesystem serialization)
 #find_package(leatherman REQUIRED)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -189,6 +191,7 @@ target_link_libraries(${PROJECT_NAME}_frame
         ${moveit_core_LIBRARIES}
         ${moveit_ros_planning_LIBRARIES}
         ${moveit_ros_planning_interface_LIBRARIES}
+        yaml-cpp
         )
 
 
