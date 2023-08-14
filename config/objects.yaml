@@ -3,9 +3,9 @@ part_c1_1:
   mesh_stl_name: "C1.STL"
   pose:
     position:
-      x: 0.04
-      y: 0.46999
-      z: 0.759024
+      x: 0.0
+      y: 0.71
+      z: 0.9779
     orientation:
       x: 0.70710678118
       y: 0.0
@@ -27,9 +27,9 @@ part_c1_2:
   mesh_stl_name: "C1.STL"
   pose:
     position:
-      x: -0.08
-      y: 0.47
-      z: 0.759024
+      x: -0.14
+      y: 0.71
+      z: 0.9779
     orientation:
       x: 0.70710678118
       y: 0.0
@@ -55,9 +55,9 @@ part_c1_3:
   mesh_stl_name: "C1.STL"
   pose:
     position:
-      x: -0.2
-      y: 0.47
-      z: 0.759024
+      x: -0.29
+      y: 0.71
+      z: 0.9779
     orientation:
       x: 0.70710678118
       y: 0.0
@@ -79,9 +79,9 @@ part_c2:
   mesh_stl_name: "C2.STL"
   pose:
     position:
-      x: -0.32
-      y: 0.47
-      z: 0.759024
+      x: -0.14
+      y: 0.87
+      z: 0.9779
     orientation:
       x: 0.70710678118
       y: 0.0
@@ -103,9 +103,9 @@ part_c3:
   mesh_stl_name: "C3.STL"
   pose:
     position:
-      x: -0.28
-      y: 0.26
-      z: 0.761024
+      x: -0.22
+      y: 1.05
+      z: 0.9779
     orientation:
       x: 0.70710678118
       y: 0.0
@@ -127,9 +127,9 @@ part_c4:
   mesh_stl_name: "C4.STL"
   pose:
     position:
-      x: -0.02
-      y: 0.29
-      z: 0.760024
+      x: 0.02
+      y: 1.04
+      z: 0.9779
     orientation:
       x: 0.70710678118
       y: 0.0
@@ -151,9 +151,9 @@ part_c5:
   mesh_stl_name: "C5.STL"
   pose:
     position:
-      x: -0.06
-      y: 0.76
-      z: 0.760024
+      x: 0.23
+      y: 0.81
+      z: 0.9779
     orientation:
       x: 0.5 #0.70710678118
       y: 0.5 #0.0
@@ -175,9 +175,9 @@ part_c6:
   mesh_stl_name: "C6.STL"
   pose:
     position:
-      x: -0.05
-      y: -0.41
-      z: 0.759024
+      x: 0.0
+      y: 0.86
+      z: 0.9779
     orientation:
       x: 0.70710678118
       y: 0.0
@@ -200,8 +200,8 @@ part_c7:
   pose:
     position:
       x: -0.28
-      y: -0.4095
-      z: 0.759024
+      y: 0.86
+      z: 0.9779
     orientation:
       x: 0.5 #0.70710678118
       y: 0.5 #0.0
@@ -223,12 +223,12 @@ right_panel:
   mesh_stl_name: "left_right_plate.STL"
   pose:
     position:
-      x: 1.58
+      x: -0.06
       y: -0.92
-      z: 0.761
+      z: 0.96
     orientation:
-      x: 0.0
-      y: 1.0
+      x: 0.7071068
+      y: 0.7071068
       z: 0.0
       w: 0.0
   relative_pose:  # From robot tool0 to part
@@ -247,12 +247,12 @@ back_panel:
   mesh_stl_name: "front_back_plate.STL"
   pose:
     position:
-      x: 1.58
-      y: -0.94
-      z: 0.792
+      x: -0.09
+      y: -0.89
+      z: 0.98
     orientation:
-      x: 0.0
-      y: 1.0
+      x: 0.7071068
+      y: 0.7071068
       z: 0.0
       w: 0.0
   relative_pose:  # From robot tool0 to part
@@ -271,12 +271,12 @@ left_panel:
   mesh_stl_name: "left_right_plate.STL"
   pose:
     position:
-      x: 1.58
+      x: -0.06
       y: -0.92
-      z: 0.817
+      z: 1.0
     orientation:
-      x: 0.0
-      y: 1.0
+      x: 0.7071068
+      y: 0.7071068
       z: 0.0
       w: 0.0
   relative_pose:  # From robot tool0 to part
@@ -295,12 +295,12 @@ front_panel:
   mesh_stl_name: "front_back_plate.STL"
   pose:
     position:
-      x: 1.58
-      y: -0.94
-      z: 0.853
+      x: -0.09
+      y: -0.89
+      z: 1.02
     orientation:
-      x: 0.0
-      y: 1.0
+      x: 0.7071068
+      y: 0.7071068
       z: 0.0
       w: 0.0
   relative_pose:  # From robot tool0 to part
@@ -313,18 +313,3 @@ front_panel:
       y: -0.7071068
       z: 0.0
       w: 0.0
-
-
-#
-#screw_2:
-#  name: "screw_2"
-#  relative_pose:  # From robot tool0 to part
-#    position:
-#      x: 0.0
-#      y: 0.0
-#      z: 0.08
-#    orientation:       # 180 degree rotation about the x-axis
-#      x: 0.0
-#      y: 0.0
-#      z: 0.0
-#      w: 1.0

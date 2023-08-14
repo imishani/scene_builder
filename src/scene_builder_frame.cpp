@@ -2,9 +2,6 @@
 // Created by itamar on 3/10/23.
 //
 
-//
-// Created by itamar on 3/7/23.
-//
 
 #include <ros/ros.h>
 #include <ros/package.h>
@@ -40,19 +37,121 @@ int main(int argc, char** argv)
     ros::ServiceClient client = nh.serviceClient<scene_builder::SceneObject>("scene_builder/add_object");
     scene_builder::SceneObject srv;
     srv.request.shape_type = 1;
-    srv.request.object_name = "table";
-    srv.request.position_x = 1.25;
-    srv.request.position_y = 0.0;
-    srv.request.position_z = 0.36;
-    srv.request.dimension_x = 1.45;
-    srv.request.dimension_y = 0.90;
-    srv.request.dimension_z = 0.74;
+    srv.request.object_name = "rod_left";
+    srv.request.position_x = 0.341429 - 0.4191;
+    srv.request.position_y = (1.218/2.) + 0.61165 + (0.025/2.);
+    srv.request.position_z = 0.973125 - 0.04314 + (0.9779/2.0);
+    srv.request.dimension_x = 0.025;
+    srv.request.dimension_y = 0.025;
+    srv.request.dimension_z = 977.9/1000.;
 
     srv.request.colors.id = srv.request.object_name;
-    srv.request.colors.color.r = 205./255.;
-    srv.request.colors.color.g = 133./255.;
-    srv.request.colors.color.b = 63./255.;
-    srv.request.colors.color.a = 1.0;
+    srv.request.colors.color.r = 211./255.;
+    srv.request.colors.color.g = 211./255.;
+    srv.request.colors.color.b = 211./255.;
+    srv.request.colors.color.a = 0.8;
+
+    if (client.call(srv))
+    {
+        ROS_INFO("Success: %d", srv.response.success);
+    }
+    else
+    {
+        ROS_ERROR("Failed to call service");
+        return 1;
+    }
+
+    srv.request.shape_type = 1;
+    srv.request.object_name = "rod_right";
+    srv.request.position_y = -((1.218/2.) + 0.61165 + (0.025/2.));
+
+    srv.request.colors.id = srv.request.object_name;
+
+
+    if (client.call(srv))
+    {
+        ROS_INFO("Success: %d", srv.response.success);
+    }
+    else
+    {
+        ROS_ERROR("Failed to call service");
+        return 1;
+    }
+
+
+    srv.request.shape_type = 1;
+    srv.request.object_name = "rod_left_top_1";
+    srv.request.position_y = (1.218/2.) + 0.61165 + 0.025 - 0.35052/2.;
+    srv.request.position_z = 0.973125 - 0.04314 + 0.9779 + 0.025/2;
+    srv.request.dimension_x = 0.025;
+    srv.request.dimension_y = 0.35052;
+    srv.request.dimension_z = 0.025;
+
+    srv.request.colors.id = srv.request.object_name;
+
+
+    if (client.call(srv))
+    {
+        ROS_INFO("Success: %d", srv.response.success);
+    }
+    else
+    {
+        ROS_ERROR("Failed to call service");
+        return 1;
+    }
+
+    srv.request.shape_type = 1;
+    srv.request.object_name = "rod_right_top_1";
+    srv.request.position_y = -((1.218/2.) + 0.61165 + 0.025 - 0.35052/2.);
+    srv.request.position_z = 0.973125 - 0.04314 + 0.9779 + 0.025/2;
+    srv.request.dimension_x = 0.025;
+    srv.request.dimension_y = 0.35052;
+    srv.request.dimension_z = 0.025;
+
+    srv.request.colors.id = srv.request.object_name;
+
+
+    if (client.call(srv))
+    {
+        ROS_INFO("Success: %d", srv.response.success);
+    }
+    else
+    {
+        ROS_ERROR("Failed to call service");
+        return 1;
+    }
+
+    srv.request.shape_type = 1;
+    srv.request.object_name = "rod_left_top_2";
+    srv.request.position_y = (1.218/2.) + 0.61165 + 0.025 - 0.35052 + 0.025/2.;
+    srv.request.position_z = 0.973125 - 0.04314 + 0.9779 + 0.025/2;
+    srv.request.dimension_x = 0.35052;
+    srv.request.dimension_y = 0.025;
+    srv.request.dimension_z = 0.025;
+
+    srv.request.colors.id = srv.request.object_name;
+
+
+    if (client.call(srv))
+    {
+        ROS_INFO("Success: %d", srv.response.success);
+    }
+    else
+    {
+        ROS_ERROR("Failed to call service");
+        return 1;
+    }
+
+    srv.request.shape_type = 1;
+    srv.request.object_name = "rod_right_top_2";
+    srv.request.position_y = -((1.218/2.) + 0.61165 + 0.025 - 0.35052 + 0.025/2.);
+    srv.request.position_z = 0.973125 - 0.04314 + 0.9779 + 0.025/2;
+    srv.request.dimension_x = 0.35052;
+    srv.request.dimension_y = 0.025;
+    srv.request.dimension_z = 0.025;
+
+    srv.request.colors.id = srv.request.object_name;
+
 
     if (client.call(srv))
     {
@@ -104,28 +203,25 @@ int main(int argc, char** argv)
     }
 
 
-    // Add a mesh - right side panel:
-//    srv.request.shape_type = 4;
-//    srv.request.object_name = "right_side_panel";
-//    srv.request.position_x = 1.9; //1.2;
-//    srv.request.position_y = -1.; //0.0;
-//    srv.request.position_z = 0.67;
+//    srv.request.shape_type = 1;
+//    srv.request.object_name = "rectangle_1";
+//    srv.request.position_x = 0.0;   // std::sqrt(2) / 4
+//    srv.request.position_y = 1.0;
+//    srv.request.position_z = 1.81;
+//    srv.request.orientation_w = 0.9238795;
+//    srv.request.orientation_x = 0.0;
+//    srv.request.orientation_y = 0.0;
+//    srv.request.orientation_z = 0.3826834;
+//    srv.request.dimension_x = 0.02;
+//    srv.request.dimension_y = std::sqrt(2);
+//    srv.request.dimension_z = 2.0;
 //
-//    tf2::Quaternion q;
-//    q.setRPY(0, M_PI, -M_PI / 2);
-//    srv.request.orientation_x = q.x();
-//    srv.request.orientation_y = q.y();
-//    srv.request.orientation_z = q.z();
-//    srv.request.orientation_w = q.w();
-//
-//    srv.request.mesh_resource = "package://scene_builder/meshes/frame_objects/stl/left_right_plate.STL";
-//
-//    // Set the color:
 //    srv.request.colors.id = srv.request.object_name;
-//    srv.request.colors.color.r = 0.5;
-//    srv.request.colors.color.g = 0.5;
-//    srv.request.colors.color.b = 0.5;
-//    srv.request.colors.color.a = 1.0;
+//    srv.request.colors.color.r = 1.0;
+//    srv.request.colors.color.g = 0.0;
+//    srv.request.colors.color.b = 0.0;
+//    srv.request.colors.color.a = 0.2;
+//
 //
 //    if (client.call(srv))
 //    {
@@ -137,44 +233,25 @@ int main(int argc, char** argv)
 //        return 1;
 //    }
 //
-//    // Add a mesh - left side panel:
-//    srv.request.object_name = "left_side_panel";
-////    srv.request.position_x = 1.9;
-////    srv.request.position_y = -1.;
-//    srv.request.position_z = 0.70;
-//
-//    srv.request.colors.id = srv.request.object_name;
-//
-//    if (client.call(srv))
-//    {
-//        ROS_INFO("Success: %d", srv.response.success);
-//    }
-//    else
-//    {
-//        ROS_ERROR("Failed to call service");
-//        return 1;
-//    }
-//
-//    // Add a mesh - Part C1:
-//    srv.request.object_name = "part_c1_1";
+//    srv.request.shape_type = 1;
+//    srv.request.object_name = "rectangle_2";
 //    srv.request.position_x = 0.0;
-//    srv.request.position_y = 0.5;
-//    srv.request.position_z = 0.68;
+//    srv.request.position_y = -1.0;
+//    srv.request.position_z = 1.81;
+//    srv.request.orientation_w = 0.9238795;
+//    srv.request.orientation_x = 0.0;
+//    srv.request.orientation_y = 0.0;
+//    srv.request.orientation_z = -0.3826834;
+//    srv.request.dimension_x = 0.02;
+//    srv.request.dimension_y = std::sqrt(2);
+//    srv.request.dimension_z = 2.0;
 //
-//    q.setRPY(M_PI / 2, 0, 0);
-//    srv.request.orientation_x = q.x();
-//    srv.request.orientation_y = q.y();
-//    srv.request.orientation_z = q.z();
-//    srv.request.orientation_w = q.w();
-//
-//    srv.request.mesh_resource = "package://scene_builder/meshes/frame_objects/stl/C1.STL";
-//
-//    // Set the color to Mango color:
 //    srv.request.colors.id = srv.request.object_name;
-//    srv.request.colors.color.r = 244./255.;
-//    srv.request.colors.color.g = 187./255.;
-//    srv.request.colors.color.b = 68./255.;
-//    srv.request.colors.color.a = 1.0;
+//    srv.request.colors.color.r = 1.0;
+//    srv.request.colors.color.g = 0.0;
+//    srv.request.colors.color.b = 0.0;
+//    srv.request.colors.color.a = 0.2;
+//
 //
 //    if (client.call(srv))
 //    {
@@ -185,141 +262,6 @@ int main(int argc, char** argv)
 //        ROS_ERROR("Failed to call service");
 //        return 1;
 //    }
-//
-//    // Add two more duplicate meshes of C1, one on the left and one on the right:
-//    srv.request.object_name = "part_c1_2";
-//    srv.request.colors.id = srv.request.object_name;
-//    srv.request.position_x = 0.2;
-//
-//    if (client.call(srv))
-//    {
-//        ROS_INFO("Success: %d", srv.response.success);
-//    }
-//    else
-//    {
-//        ROS_ERROR("Failed to call service");
-//        return 1;
-//    }
-//
-//    srv.request.object_name = "part_c1_3";
-//    srv.request.colors.id = srv.request.object_name;
-//    srv.request.position_x = -0.2;
-//
-//    if (client.call(srv))
-//    {
-//        ROS_INFO("Success: %d", srv.response.success);
-//    }
-//    else
-//    {
-//        ROS_ERROR("Failed to call service");
-//        return 1;
-//    }
-//
-//    // Add a mesh - Part C2:
-//    srv.request.object_name = "part_c2";
-//    srv.request.position_x = -0.2;
-//    srv.request.position_y = 0.7;
-//
-//    srv.request.mesh_resource = "package://scene_builder/meshes/frame_objects/stl/C2.STL";
-//
-//    // Set the color to Fern Green color:
-//    srv.request.colors.id = srv.request.object_name;
-//    srv.request.colors.color.r = 79./255.;
-//    srv.request.colors.color.g = 121./255.;
-//    srv.request.colors.color.b = 66./255.;
-//
-//    if (client.call(srv))
-//    {
-//        ROS_INFO("Success: %d", srv.response.success);
-//    }
-//    else
-//    {
-//        ROS_ERROR("Failed to call service");
-//        return 1;
-//    }
-//
-//    // Add a mesh - Part C5:
-//    srv.request.object_name = "part_c5";
-//    srv.request.position_x = 0.2;
-//    srv.request.position_y = 0.7;
-//
-//    srv.request.mesh_resource = "package://scene_builder/meshes/frame_objects/stl/C5.STL";
-//
-//    // Set the color to Blue Green color:
-//    srv.request.colors.id = srv.request.object_name;
-//    srv.request.colors.color.r = 8./255.;
-//    srv.request.colors.color.g = 143./255.;
-//    srv.request.colors.color.b = 143./255.;
-//
-//    if (client.call(srv))
-//    {
-//        ROS_INFO("Success: %d", srv.response.success);
-//    }
-//    else
-//    {
-//        ROS_ERROR("Failed to call service");
-//        return 1;
-//    }
-//
-    srv.request.shape_type = 1;
-    srv.request.object_name = "rectangle_1";
-    srv.request.position_x = 0.0;   // std::sqrt(2) / 4
-    srv.request.position_y = 1.0;
-    srv.request.position_z = 1.81;
-    srv.request.orientation_w = 0.9238795;
-    srv.request.orientation_x = 0.0;
-    srv.request.orientation_y = 0.0;
-    srv.request.orientation_z = 0.3826834;
-    srv.request.dimension_x = 0.02;
-    srv.request.dimension_y = std::sqrt(2);
-    srv.request.dimension_z = 2.0;
-
-    srv.request.colors.id = srv.request.object_name;
-    srv.request.colors.color.r = 1.0;
-    srv.request.colors.color.g = 0.0;
-    srv.request.colors.color.b = 0.0;
-    srv.request.colors.color.a = 0.2;
-
-
-    if (client.call(srv))
-    {
-        ROS_INFO("Success: %d", srv.response.success);
-    }
-    else
-    {
-        ROS_ERROR("Failed to call service");
-        return 1;
-    }
-
-    srv.request.shape_type = 1;
-    srv.request.object_name = "rectangle_2";
-    srv.request.position_x = 0.0;
-    srv.request.position_y = -1.0;
-    srv.request.position_z = 1.81;
-    srv.request.orientation_w = 0.9238795;
-    srv.request.orientation_x = 0.0;
-    srv.request.orientation_y = 0.0;
-    srv.request.orientation_z = -0.3826834;
-    srv.request.dimension_x = 0.02;
-    srv.request.dimension_y = std::sqrt(2);
-    srv.request.dimension_z = 2.0;
-
-    srv.request.colors.id = srv.request.object_name;
-    srv.request.colors.color.r = 1.0;
-    srv.request.colors.color.g = 0.0;
-    srv.request.colors.color.b = 0.0;
-    srv.request.colors.color.a = 0.2;
-
-
-    if (client.call(srv))
-    {
-        ROS_INFO("Success: %d", srv.response.success);
-    }
-    else
-    {
-        ROS_ERROR("Failed to call service");
-        return 1;
-    }
 //
 //    // Adding "demmy" objects to the scene as screws, TODO: Change to real screws
 //    // Add as cylinder
