@@ -4,8 +4,10 @@
 
 #include "scene_builder.hpp"
 
+#include <utility>
 
-scene::scene_builder::scene_builder(std::string frame_id) : frame_id_(frame_id) {
+
+scene::scene_builder::scene_builder(std::string frame_id) : frame_id_(std::move(frame_id)) {
     object_counter = 0;
 }
 
@@ -18,12 +20,6 @@ scene::scene_builder::scene_builder(ros::NodeHandle& nh, ros::NodeHandle& pnh, s
     object_counter = 0;
 }
 
-
-scene::scene_builder::~scene_builder() {
-//    for (auto& object : objects_){
-//        delete object;
-//    }
-}
 
 void scene::object::init(std::string& name_, shapes::ShapeType &shape_,
                          std::vector<double>& pose_, std::vector<double> &dimension_,
@@ -294,7 +290,31 @@ std::vector<scene::object> scene::scene_builder::get_objects() const {
     return objects_;
 }
 
+bool scene::scene_builder::update_object_pose(std::string &name, geometry_msgs::Pose &pose) {
+    object obj;
+    if (!get_object(name, obj)){
+        ROS_WARN("Object %s does not exist", name.c_str());
+        return false;
+    }
+    obj.pose = {pose.position.x, pose.position.y, pose.position.z,
+                pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w};
+    auto moveit_object = planning_scene_interface_.getObjects({name});
+    moveit_object[name].pose = pose;
+    planning_scene_interface_.applyCollisionObjects({moveit_object[name]});
+    return true;
+}
 
+bool scene::scene_builder::update_object_pose_cb(::scene_builder::UpdateObjectPose::Request &req,
+                                                 ::scene_builder::UpdateObjectPose::Response &res) {
+    geometry_msgs::Pose pose;
+    pose = req.object_pose;
+    if (!update_object_pose(req.object_name, pose)){
+        res.success = false;
+        return false;
+    }
+    res.success = true;
+    return true;
+}
 
 int main(int argc, char** argv){
 
@@ -308,9 +328,11 @@ int main(int argc, char** argv){
     ros::ServiceServer service = nh.advertiseService("scene_builder/add_object", &scene::scene_builder::add_object_cb, &scene_builder);
     ros::ServiceServer service2 = nh.advertiseService("scene_builder/remove_object", &scene::scene_builder::remove_object_cb, &scene_builder);
     ros::ServiceServer service3 = nh.advertiseService("scene_builder/remove_all_objects", &scene::scene_builder::remove_all_objects_cb, &scene_builder);
+    ros::ServiceServer service4 = nh.advertiseService("scene_builder/update_object_pose", &scene::scene_builder::update_object_pose_cb, &scene_builder);
+
     /// @TODO: add a service to get the list of objects in the scene
 
-    ROS_INFO("Scene builder is ready to add/remove objects");
+    ROS_INFO("Scene builder is ready to add/remove/update objects");
 
     ros::spin();
 
