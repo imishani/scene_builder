@@ -2,18 +2,21 @@
 // Created by itamar on 3/6/23.
 //
 
-#ifndef SMPL_ZTP_SCENE_BUILDER_HPP
-#define SMPL_ZTP_SCENE_BUILDER_HPP
+#ifndef SCENE_BUILDER_HPP
+#define SCENE_BUILDER_HPP
 
 #include <ros/ros.h>
 #include <geometric_shapes/mesh_operations.h>
 #include <geometric_shapes/shape_operations.h>
 #include <geometric_shapes/shapes.h>
+
+#include <utility>
 #include "moveit/planning_scene_interface/planning_scene_interface.h"
 
 // custom services
 #include "scene_builder/SceneObject.h"
 #include "scene_builder/ObjDeleter.h"
+#include "scene_builder/UpdateObjectPose.h"
 
 
 namespace scene{
@@ -40,13 +43,14 @@ namespace scene{
     /// \brief A class that builds a scene from a given set of objects
     class scene_builder {
         public:
-            scene_builder(std::string frame_id="world");
+
+            explicit scene_builder(std::string frame_id="world");
 
             scene_builder(ros::NodeHandle& nh, ros::NodeHandle& pnh);
 
             scene_builder(ros::NodeHandle& nh, ros::NodeHandle& pnh, std::string& frame_id);
 
-            ~scene_builder();
+            ~scene_builder() = default;
 
             /// \brief Create a box object
             /// \param name The name of the object
@@ -108,6 +112,12 @@ namespace scene{
             /// \return True if all objects were removed successfully, false otherwise
             bool remove_all_objects();
 
+            /// \brief Update the pose of an object in the scene
+            /// \param name The name of the object
+            /// \param pose The new pose of the object
+            /// \return True if the object was updated successfully, false otherwise
+            bool update_object_pose(std::string& name, geometry_msgs::Pose &pose);
+
             /// \brief Ros service callback for adding an object to the scene
             /// \param req The request
             /// \param res The response
@@ -125,6 +135,14 @@ namespace scene{
             /// \param res The response
             /// \return True if all objects were removed successfully, false otherwise
             bool remove_all_objects_cb(::scene_builder::ObjDeleter::Request &req, ::scene_builder::ObjDeleter::Response &res);
+
+            /// \brief Ros service callback for updating the pose of an object in the scene
+            /// \param req The request
+            /// \param res The response
+            /// \return True if the object was updated successfully, false otherwise
+
+            bool update_object_pose_cb(::scene_builder::UpdateObjectPose::Request &req, ::scene_builder::UpdateObjectPose::Response &res);
+
 
             /// \brief Get the number of objects in the scene
             /// \return size_t The number of objects in the scene
@@ -148,7 +166,7 @@ namespace scene{
             }
 
             void set_frame_id(std::string frame_id){
-                frame_id_ = frame_id;
+                frame_id_ = std::move(frame_id);
             }
 
 
@@ -169,4 +187,4 @@ namespace scene{
 }; // namespace scene
 
 
-#endif //SMPL_ZTP_SCENE_BUILDER_HPP
+#endif //SCENE_BUILDER_HPP
